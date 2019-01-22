@@ -8,6 +8,7 @@ class App extends Component {
     user: {},
     places: [],
     itinerary: {
+      id: null,
       user_id: null,
       title: null,
       start: null,

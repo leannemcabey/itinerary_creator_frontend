@@ -3,6 +3,10 @@ import Place from '../components/Place'
 
 class Itinerary extends Component {
 
+  state = {
+    places: []
+  }
+
   filteredPlaces = () => {
     const city = this.props.itinerary.city
     const state = this.props.itinerary.state
@@ -27,12 +31,34 @@ class Itinerary extends Component {
     }
   }
 
+  addPlaces = (places) => {
+    if(places){
+      for(let place of places){
+        console.log('place_id', place.id)
+        console.log('itinerary_id', this.props.itinerary.id)
+        fetch(`http://localhost:3000/api/v1/itinerary_places`,
+        {
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({place_id: place.id,
+                                itinerary_id: this.props.itinerary.id})
+        })
+        .then(r => r.json())
+      }
+    }
+
+  }
+
   render() {
-    console.log(this.generateItinerary())
+
     return (
       <div>
         <h1> Itinerary</h1>
-        {this.generateItinerary() ? this.generateItinerary().map(place => <Place place={place}/>) : null}
+      {this.addPlaces(this.generateItinerary())}
+        {this.state.places.length === 0 ? null: this.state.places.map(p => <Place key ={p.id} place = {p}/>)}
       </div>
     );
   }
