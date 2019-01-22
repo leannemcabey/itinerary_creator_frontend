@@ -4,15 +4,37 @@ import './App.css';
 import Itinerary from './containers/Itinerary';
 import Quiz from './components/Quiz';
 class App extends Component {
+
+  state = {
+    user: {},
+    places: [],
+    itinerary: null
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:3000/api/v1/places')
+    .then(r => r.json())
+    .then(places => this.setState({places}))
+
+    //testing the itinerary added to the user
+    fetch('http://localhost:3000/api/v1/users/1')
+    .then(r => r.json())
+    .then(user => this.setState({user}))
+  }
+
+  updateItineraries = (new_itinerary) =>{
+    this.setState({itinerary: new_itinerary})
+  } 
+
   render() {
     return (
       <div>
         <div>
-          <Quiz />
+          <Quiz user = {this.state.user} updateItineraries = {this.updateItineraries}/>
         </div>
 
         <div>
-          <Itinerary />
+          <Itinerary places = {this.state.places} itinerary = {this.state.itinerary}/>
         </div>
         
       </div>
