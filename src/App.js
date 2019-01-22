@@ -8,7 +8,15 @@ class App extends Component {
   state = {
     user: {},
     places: [],
-    itinerary: null
+    itinerary: {
+      user_id: null,
+      title: null,
+      start: null,
+      end: null, 
+      city: null, 
+      state: null, 
+      budget: null
+    }
   }
 
   componentDidMount(){
@@ -34,7 +42,7 @@ class App extends Component {
         </div>
 
         <div>
-          <Itinerary places = {this.state.places} itinerary = {this.state.itinerary}/>
+          <Itinerary places = {this.state.places} itinerary = {this.state.itinerary} />
         </div>
         
       </div>
