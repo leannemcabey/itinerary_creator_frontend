@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class Quiz extends Component {
   state = {
@@ -24,7 +24,6 @@ handleChange = event => {
   }else{
     this.setState({ [key]: event.target.value})
   }
-
 }
 
 handleSubmit = event => {
@@ -39,9 +38,9 @@ handleSubmit = event => {
     body: JSON.stringify(this.state)
   })
   .then(r => r.json())
-  .then(r => this.props.updateItineraries(r))
-
+  .then(r => this.props.updateCurrentItinerary(r))
 }
+
   render() {
     return (
       <div>
@@ -111,8 +110,8 @@ handleSubmit = event => {
 
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default Quiz;
+export default Quiz

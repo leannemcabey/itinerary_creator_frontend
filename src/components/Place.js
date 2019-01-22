@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 
 class Place extends Component {
@@ -9,8 +9,8 @@ class Place extends Component {
         address: <p>{this.props.place.address}</p>
         description <p>{this.props.place.description}</p>
       </div>
-    );
+    )
   }
 }
 
-export default Place;
+export default Place
