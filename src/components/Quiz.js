@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 class Quiz extends Component {
   state = {
     user_id: null,
-    title: null,
-    start: null,
-    end: null, 
-    city: null, 
-    state: null, 
+    title: '',
+    start: '',
+    end: '',
+    city: '',
+    state: '',
     budget: '1'
   }
 
@@ -24,7 +24,7 @@ handleChange = event => {
   }else{
     this.setState({ [key]: event.target.value})
   }
-  
+
 }
 
 handleSubmit = event => {
@@ -34,7 +34,7 @@ handleSubmit = event => {
     headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-    }, 
+    },
     method: 'POST',
     body: JSON.stringify(this.state)
   })
@@ -50,65 +50,65 @@ handleSubmit = event => {
           <div>
             <label>Title of itinerary</label>
             <div>
-              <input type='text' name='title' value={this.state.title} onChange={this.handleChange}/> 
+              <input type='text' name='title' value={this.state.title} onChange={this.handleChange}/>
             </div>
           </div>
           <div>
           <label>Start Date</label>
           <div>
-            <input type='date' name='start' value={this.state.start} onChange={this.handleChange}/> 
+            <input type='date' name='start' value={this.state.start} onChange={this.handleChange}/>
           </div>
         </div>
         <div>
         <label>End Date</label>
           <div>
-            <input type='date' name='end' value={this.state.end} onChange={this.handleChange}/> 
+            <input type='date' name='end' value={this.state.end} onChange={this.handleChange}/>
           </div>
         </div>
         <div>
         <label>City</label>
-          <input type='text' name='city' value={this.state.city} onChange={this.handleChange}/> 
+          <input type='text' name='city' value={this.state.city} onChange={this.handleChange}/>
           <label>State</label>
-          <input type='text' name='state' value={this.state.state} onChange={this.handleChange}/> 
+          <input type='text' name='state' value={this.state.state} onChange={this.handleChange}/>
         </div>
 
-        <div> 
+        <div>
            <label>What is this itinerary for? </label>
             <div>
-              <input 
-                    type='radio'   
-                    name='budget' 
+              <input
+                    type='radio'
+                    name='budget'
                     value='1'
                     checked={this.state.budget === 1}
                     onChange={this.handleChange}/> Tinder Date
         </div>
             <div>
-              <input 
-                      type='radio'       
-                      name='budget' 
+              <input
+                      type='radio'
+                      name='budget'
                       value='2'
                       checked={this.state.budget === 2}
                       onChange={this.handleChange}/> Want to impress your date
             </div>
             <div>
-              <input 
-                type='radio' 
-                name='budget' 
+              <input
+                type='radio'
+                name='budget'
                 value='3'
                 checked={this.state.budget === 3}
                 onChange={this.handleChange}/> Friends or Family came to visit
             </div>
-            <div>         
-              <input 
-                type='radio' 
-                name='budget' 
+            <div>
+              <input
+                type='radio'
+                name='budget'
                 value='4'
                 checked={this.state.budget === 4}
                 onChange={this.handleChange}/> Ballin!
             </div>
           </div>
           <button type= 'submit' value='submit'> Submit</button>
-            
+
         </form>
       </div>
     );

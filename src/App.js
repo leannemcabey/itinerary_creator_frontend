@@ -12,9 +12,9 @@ class App extends Component {
       user_id: null,
       title: null,
       start: null,
-      end: null, 
-      city: null, 
-      state: null, 
+      end: null,
+      city: null,
+      state: null,
       budget: null
     }
   }
@@ -32,7 +32,7 @@ class App extends Component {
 
   updateItineraries = (new_itinerary) =>{
     this.setState({itinerary: new_itinerary})
-  } 
+  }
 
   render() {
     return (
@@ -44,7 +44,7 @@ class App extends Component {
         <div>
           <Itinerary places = {this.state.places} itinerary = {this.state.itinerary} />
         </div>
-        
+
       </div>
     );
   }
