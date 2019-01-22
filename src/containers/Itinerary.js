@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Place from '../components/Place'
+import Place from '../components/Place'
 
 class Itinerary extends Component {
 
@@ -29,11 +29,10 @@ class Itinerary extends Component {
 
   render() {
     console.log(this.generateItinerary())
-    // This is console-logging 3 times upon page load. This component must be rendering 3 times. Should it be?
     return (
       <div>
         <h1> Itinerary</h1>
-
+        {this.generateItinerary() ? this.generateItinerary().map(place => <Place place={place}/>) : null}
       </div>
     );
   }
