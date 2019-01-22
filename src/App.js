@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Itinerary from './containers/Itinerary';
 import Quiz from './components/Quiz';
