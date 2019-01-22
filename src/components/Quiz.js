@@ -1,50 +1,55 @@
 import React, { Component } from 'react'
 
 class Quiz extends Component {
-  state = {
-    user_id: null,
-    title: '',
-    start: '',
-    end: '',
-    city: '',
-    state: '',
-    budget: '1'
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      userId: this.props.user.id,
+      title: '',
+      start: '',
+      end: '',
+      city: '',
+      state: '',
+      budget: '1'
+    }
   }
 
-componentDidMount(){
-  fetch('http://localhost:3000/api/v1/users/1')
-  .then(r => r.json())
-  .then(user => this.setState({user_id: user.id}))
-}
-
-handleChange = event => {
-  const key =  event.target.name
-  if(key === 'budget'){
-    this.setState({ [key]: parseInt(event.target.value)})
-  }else{
-    this.setState({ [key]: event.target.value})
+  handleChange = event => {
+    const key =  event.target.name
+    if(key === 'budget'){
+      this.setState({ [key]: parseInt(event.target.value)})
+    }else{
+      this.setState({ [key]: event.target.value})
+    }
   }
-}
 
-handleSubmit = event => {
-  event.preventDefault()
-  fetch('http://localhost:3000/api/v1/itineraries',
-  {
-    headers:{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify(this.state)
-  })
-  .then(r => r.json())
-  .then(r => this.props.updateCurrentItinerary(r))
-}
+  handleSubmit = event => {
+    event.preventDefault()
+    fetch('http://localhost:3000/api/v1/itineraries', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: this.state.userId,
+        title: this.state.title,
+        start: this.state.start,
+        end: this.state.end,
+        city: this.state.city,
+        state: this.state.state,
+        budget: this.state.budget
+      })
+    })
+    .then(r => r.json())
+    .then(r => this.props.updateCurrentItinerary(r))
+  }
 
   render() {
     return (
       <div>
-        <h1> Quiz</h1>
+        <h1> Generate New Itinerary </h1>
         <form onSubmit = {this.handleSubmit}>
           <div>
             <label>Title of itinerary</label>

@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import './App.css'
+import User from './components/User'
 import Itinerary from './containers/Itinerary'
 import Quiz from './components/Quiz'
 
 class App extends Component {
 
   state = {
-    user: {},
+    user: null,
     places: [],
     itinerary: {
       id: null,
-      user_id: null,
+      userId: null,
       title: null,
       start: null,
       end: null,
@@ -24,14 +25,36 @@ class App extends Component {
     fetch('http://localhost:3000/api/v1/places')
     .then(r => r.json())
     .then(places => this.setState({places}))
+  }
 
-    //testing the itinerary added to the user
-    fetch('http://localhost:3000/api/v1/users/1')
-    .then(r => r.json())
-    .then(user => this.setState({user}))
+  findOrCreateUser = (event, name) => {
+    event.preventDefault()
+    fetch('http://localhost:3000/api/v1/users')
+    .then( r => r.json() )
+    .then( users => {
+      let user = users.find(user => user.name === name)
+      if (user) {
+        this.setState({user})
+      }
+      else {
+        fetch('http://localhost:3000/api/v1/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name
+          })
+        })
+        .then(r => r.json())
+        .then(user => this.setState({user}))
+      }
+    })
   }
 
   updateCurrentItinerary = (new_itinerary) => {
+    console.log('updating itinerary')
     this.setState({itinerary: new_itinerary}, () => this.postPlacesToAPI(this.generateItinerary()))
   }
 
@@ -77,7 +100,10 @@ class App extends Component {
     return (
       <div>
         <div>
-          <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary}/>
+          <User findOrCreateUser={this.findOrCreateUser}/>
+        </div>
+        <div>
+          {this.state.user ? <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} /> : null}
         </div>
 
         <div>
