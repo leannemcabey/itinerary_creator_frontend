@@ -19,6 +19,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import PlaceIcon from '@material-ui/icons/Place'
 import Grid from '@material-ui/core/Grid';
 
 // Styling
@@ -86,11 +87,9 @@ class Itinerary extends Component {
       <main className={classes.main}>
       <CssBaseline />
         <Avatar className={classes.avatar}>
-            <AssignmentIcon />
+            <PlaceIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-           Your Itinerary!
-        </Typography>
+
         <Grid container spacing={24}>
         {this.props.places.length === 0 ? null : this.props.places.map(p => <Grid item xs={12}><Place key={p.id} place={p}/> </Grid>)}
         </Grid>

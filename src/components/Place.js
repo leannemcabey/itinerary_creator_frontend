@@ -51,7 +51,7 @@ class Place extends Component {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="secondary"  href={this.props.place.website} className={classes.button}>Learn More</Button>
+        <Button size="small" color="secondary"  target="_blank" href={this.props.place.website} className={classes.button}>Learn More</Button>
       </CardActions>
     </Card>
 

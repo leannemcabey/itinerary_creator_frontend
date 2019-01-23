@@ -142,6 +142,7 @@ class Quiz extends Component {
     const { classes } = this.props;
 
     return (
+
       <div>
       {this.props.getIteneraryId() ? <Redirect to="/itinerary" /> :
       <div>
@@ -184,7 +185,6 @@ class Quiz extends Component {
             <TextField
             required
             id="outlined-name"
-            label="Date"
             name='date'
             className={classes.textField}
             value={this.state.date}

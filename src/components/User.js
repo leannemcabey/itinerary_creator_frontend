@@ -67,7 +67,9 @@ class User extends Component {
       <div>
         {this.props.user ? <Redirect to="/create" /> :
         <main className={classes.main}>
+        
         <CssBaseline />
+        <center><img src={require('../assets/images/Delish_Dream_Dish.png')} /></center>
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
