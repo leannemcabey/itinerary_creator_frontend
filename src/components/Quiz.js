@@ -1,5 +1,52 @@
 import React, { Component } from 'react'
 import { Redirect } from "react-router-dom"
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+
+// Styling
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  dense: {
+    marginTop: 16,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
+const budget = [
+  {
+    value: '1',
+    label: 'Tinder Date ($)',
+  },
+  {
+    value: '2',
+    label: 'Second Date ($$)',
+  },
+  {
+    value: '3',
+    label: "Fam ($$$)",
+  },
+  {
+    value: '4',
+    label: 'Ballin ($$$$)',
+  },
+];
+
 
 class Quiz extends Component {
 
@@ -8,8 +55,8 @@ class Quiz extends Component {
     this.state = {
       userId: this.props.user.id,
       title: '',
-      start: '',
-      end: '',
+      date: '',
+      notes: '',
       city: '',
       state: '',
       budget: '1'
@@ -36,8 +83,8 @@ class Quiz extends Component {
       body: JSON.stringify({
         user_id: this.state.userId,
         title: this.state.title,
-        start: this.state.start,
-        end: this.state.end,
+        date: this.state.date,
+        notes: this.state.notes,
         city: this.state.city,
         state: this.state.state,
         budget: this.state.budget
@@ -48,73 +95,103 @@ class Quiz extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
       {this.props.getIteneraryId() ? <Redirect to="/itinerary" /> :
       <div>
-        <h1> Generate New Itinerary </h1>
-        <form onSubmit = {this.handleSubmit}>
-          <div>
-            <label>Title of itinerary</label>
-            <div>
-              <input type='text' name='title' value={this.state.title} onChange={this.handleChange}/>
-            </div>
-          </div>
-          <div>
-          <label>Start Date</label>
-          <div>
-            <input type='date' name='start' value={this.state.start} onChange={this.handleChange}/>
-          </div>
-        </div>
-        <div>
-        <label>End Date</label>
-          <div>
-            <input type='date' name='end' value={this.state.end} onChange={this.handleChange}/>
-          </div>
-        </div>
-        <div>
-        <label>City</label>
-          <input type='text' name='city' value={this.state.city} onChange={this.handleChange}/>
-          <label>State</label>
-          <input type='text' name='state' value={this.state.state} onChange={this.handleChange}/>
-        </div>
+        <form onSubmit = {this.handleSubmit} className={classes.container} noValidate autoComplete="off">
+          <TextField
+            required
+            id="outlined-name"
+            label="Title"
+            name='title'
+            placeholder="Title"
+            className={classes.textField}
+            value={this.state.title}
+            onChange={this.handleChange}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+          id="outlined-multiline-flexible"
+          label="Notes"
+          placeholder="Notes"
+          multiline
+          rowsMax="4"
+          name= 'notes'
+          value={this.state.notes}
+          onChange={this.handleChange}
+          className={classes.textField}
+          margin="normal"
+          helperText="hello"
+          variant="outlined"
+        />
+        <TextField
+        required
+        id="outlined-name"
+        label="Date"
+        name='date'
+        className={classes.textField}
+        value={this.state.date}
+        onChange={this.handleChange}
+        margin="normal"
+        variant="outlined"
+        type='date'
+      />
+      <TextField
+        required
+        id="outlined-name"
+        label="City"
+        name='city'
+        placeholder="City"
+        className={classes.textField}
+        value={this.state.city}
+        onChange={this.handleChange}
+        margin="normal"
+        variant="outlined"
+      />
 
-        <div>
-           <label>What is this itinerary for? </label>
-            <div>
-              <input
-                    type='radio'
-                    name='budget'
-                    value='1'
-                    checked={this.state.budget === 1}
-                    onChange={this.handleChange}/> Tinder Date
-        </div>
-            <div>
-              <input
-                      type='radio'
-                      name='budget'
-                      value='2'
-                      checked={this.state.budget === 2}
-                      onChange={this.handleChange}/> Want to impress your date
-            </div>
-            <div>
-              <input
-                type='radio'
-                name='budget'
-                value='3'
-                checked={this.state.budget === 3}
-                onChange={this.handleChange}/> Friends or Family came to visit
-            </div>
-            <div>
-              <input
-                type='radio'
-                name='budget'
-                value='4'
-                checked={this.state.budget === 4}
-                onChange={this.handleChange}/> Ballin!
-            </div>
-          </div>
-          <button type= 'submit' value='submit'> Submit</button>
+      <TextField
+        required
+        id="outlined-name"
+        label="State"
+        name='state'
+        placeholder="State"
+        className={classes.textField}
+        value={this.state.state}
+        onChange={this.handleChange}
+        margin="normal"
+        variant="outlined"
+      />
+      <TextField
+      id="outlined-select-budget"
+      select
+      label="Select"
+      className={classes.textField}
+      value={this.state.budget}
+      name='budget'
+      onChange={this.handleChange}
+      SelectProps={{
+        MenuProps: {
+          className: classes.menu,
+        },
+      }}
+      helperText="What's your budget"
+      margin="normal"
+      variant="outlined"
+      >
+        {budget.map(option => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+      
+      <Fab color="primary" aria-label="Add" className={classes.fab} type = 'submit' value='submit'>
+        <AddIcon />
+      </Fab>
 
         </form>
       </div>}
@@ -123,4 +200,8 @@ class Quiz extends Component {
   }
 }
 
-export default Quiz
+Quiz.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Quiz);

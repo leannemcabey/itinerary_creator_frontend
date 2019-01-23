@@ -109,12 +109,10 @@ class App extends Component {
 
           <div>
             <Route path='/signin' render={() => <User findOrCreateUser={this.findOrCreateUser} user={this.state.user} />}/>
-            {/* <User findOrCreateUser={this.findOrCreateUser}/> */}
           </div>
 
           <div>
             <Route path='/create' render={() => <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} getIteneraryId={this.getIteneraryId}/>}/>
-            {/* {this.state.user ? <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} /> : null} */}
           </div>
 
           <div>
