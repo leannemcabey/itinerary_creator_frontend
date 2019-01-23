@@ -55,6 +55,10 @@ class App extends Component {
     })
   }
 
+  getIteneraryId = () => {
+    return this.state.itinerary.id
+  }
+
   updateCurrentItinerary = (new_itinerary) => {
     console.log('updating itinerary')
     this.setState({itinerary: new_itinerary}, () => this.postPlacesToAPI(this.generateItinerary()))
@@ -109,7 +113,7 @@ class App extends Component {
           </div>
 
           <div>
-            <Route path='/create' render={() => <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} />}/>
+            <Route path='/create' render={() => <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} getIteneraryId={this.getIteneraryId}/>}/>
             {/* {this.state.user ? <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} /> : null} */}
           </div>
 

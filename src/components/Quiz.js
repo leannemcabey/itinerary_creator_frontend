@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from "react-router-dom"
 
 class Quiz extends Component {
 
@@ -48,6 +49,8 @@ class Quiz extends Component {
 
   render() {
     return (
+      <div>
+      {this.props.getIteneraryId() ? <Redirect to="/itinerary" /> :
       <div>
         <h1> Generate New Itinerary </h1>
         <form onSubmit = {this.handleSubmit}>
@@ -114,6 +117,7 @@ class Quiz extends Component {
           <button type= 'submit' value='submit'> Submit</button>
 
         </form>
+      </div>}
       </div>
     )
   }
