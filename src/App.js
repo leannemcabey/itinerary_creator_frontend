@@ -117,7 +117,6 @@ class App extends Component {
 
           <div>
             <Route path='/itinerary' render={() => <Itinerary places={this.generateItinerary()} />}/>
-            {/* {this.state.itinerary.id ? <Itinerary places={this.generateItinerary()} /> : null} */}
           </div>
 
         </div>
