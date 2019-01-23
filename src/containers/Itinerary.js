@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Place from '../components/Place'
+import { Redirect } from "react-router-dom"
 
 class Itinerary extends Component {
 

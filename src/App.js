@@ -3,6 +3,7 @@ import './App.css'
 import User from './components/User'
 import Itinerary from './containers/Itinerary'
 import Quiz from './components/Quiz'
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom"
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
   }
 
   findOrCreateUser = (event, name) => {
+    //debugger
     event.preventDefault()
     fetch('http://localhost:3000/api/v1/users')
     .then( r => r.json() )
@@ -98,19 +100,26 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Router>
         <div>
-          <User findOrCreateUser={this.findOrCreateUser}/>
-        </div>
-        <div>
-          {this.state.user ? <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} /> : null}
-        </div>
 
-        <div>
-          {this.state.itinerary.id ? <Itinerary places={this.generateItinerary()} /> : null}
-        </div>
+          <div>
+            <Route path='/signin' render={() => <User findOrCreateUser={this.findOrCreateUser} user={this.state.user} />}/>
+            {/* <User findOrCreateUser={this.findOrCreateUser}/> */}
+          </div>
 
-      </div>
+          <div>
+            <Route path='/create' render={() => <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} />}/>
+            {/* {this.state.user ? <Quiz user={this.state.user} updateCurrentItinerary={this.updateCurrentItinerary} /> : null} */}
+          </div>
+
+          <div>
+            <Route path='/itinerary' render={() => <Itinerary places={this.generateItinerary()} />}/>
+            {/* {this.state.itinerary.id ? <Itinerary places={this.generateItinerary()} /> : null} */}
+          </div>
+
+        </div>
+      </Router>
     );
   }
 }
