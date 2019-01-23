@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 
-// styling 
+// styling
 const styles  = theme => ({
   card: {
     minWidth: 275,
@@ -43,8 +43,8 @@ class Place extends Component {
         {this.props.place.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-        {this.props.place.description.split(',').map(d => <Chip label={d.split('_').join(' ')} className={classes.chip} color='primary' variant="outlined"/>)}
-      
+        {this.props.place.description.split(',').map(d => <Chip key={d} label={d.split('_').join(' ')} className={classes.chip} color='primary' variant="outlined"/>)}
+
         </Typography>
         <Typography component="p">
           {this.props.place.address}
