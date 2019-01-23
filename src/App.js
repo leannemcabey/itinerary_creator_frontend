@@ -3,7 +3,7 @@ import './App.css'
 import User from './components/User'
 import Itinerary from './containers/Itinerary'
 import Quiz from './components/Quiz'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom"
 
 class App extends Component {
 
