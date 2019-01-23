@@ -86,10 +86,8 @@ class Itinerary extends Component {
     return (
       <main className={classes.main}>
       <CssBaseline />
-        <Avatar className={classes.avatar}>
-            <PlaceIcon />
-        </Avatar>
-
+        <br />
+        <br />
         <Grid container spacing={24}>
         {this.props.places.length === 0 ? null : this.props.places.map(p => <Grid item xs={12}><Place key={p.id} place={p}/> </Grid>)}
         </Grid>
