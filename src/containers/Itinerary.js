@@ -1,23 +1,10 @@
 import React, { Component } from 'react'
 import Place from '../components/Place'
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Grid from '@material-ui/core/Grid';
 
@@ -92,7 +79,7 @@ class Itinerary extends Component {
            Your Itinerary!
         </Typography>
         <Grid container spacing={24}>
-        {this.props.places.length === 0 ? null : this.props.places.map(p => <Grid item xs={12}><Place key={p.id} place={p}/> </Grid>)}
+        {this.props.places.length === 0 ? null : this.props.places.map(p => <Grid item xs={12} key={p.id}><Place place={p}/> </Grid>)}
         </Grid>
       </main>
 
@@ -105,4 +92,3 @@ Itinerary.propTypes = {
 };
 
 export default withStyles(styles)(Itinerary);
-
