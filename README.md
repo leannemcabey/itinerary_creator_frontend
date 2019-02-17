@@ -6,6 +6,8 @@ This application utilizes a Rails backend API, which can be found [here](https:/
 
 ## Visuals
 
+[Video Demo](https://www.youtube.com/watch?v=RXFBBkyoxzs)
+
 ## Installation
 
 ```bash
