@@ -103,6 +103,7 @@ class App extends Component {
 
   generateItinerary = () => {
     let availablePlaces = this.getAvailablePlaces()
+    console.log(availablePlaces)
     const itineraryPlaces = []
 
     for (let i = 0; i < 5; i++) {
@@ -140,13 +141,13 @@ class App extends Component {
         <div>
 
 
-          {this.state.clicked ? <Redirect to="/signin" /> : 
+          {this.state.clicked ? <Redirect to="/signin" /> :
             <div className={classes.root}>
               <center><Link to ='/signin' onClick = {this.handleClick}><img src={require('./assets/images/Delish_Dream_Dish.png')}/></Link></center>
 
             </div>
           }
-          
+
           <div>
             <Route path='/signin'  render={() => <User findOrCreateUser={this.findOrCreateUser} user={this.state.user} />}/>
           </div>
@@ -170,4 +171,3 @@ App.propTypes = {
 };
 
 export default withStyles(styles)(App);
-
