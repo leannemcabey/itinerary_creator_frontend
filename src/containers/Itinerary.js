@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Place from '../components/Place'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
+// import Typography from '@material-ui/core/Typography';
+// import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import PlaceIcon from '@material-ui/icons/Place'
+// import AssignmentIcon from '@material-ui/icons/Assignment';
+// import PlaceIcon from '@material-ui/icons/Place'
 import Grid from '@material-ui/core/Grid';
 
 // Styling
@@ -67,6 +67,12 @@ const styles = theme => ({
 
 
 class Itinerary extends Component {
+
+  fetchPlaces = () => {
+    fetch('http://localhost:3000/api/v1/places')
+    .then(r => r.json())
+    .then(places => this.props.setPlaces(places))
+  }
 
   render() {
     const { classes } = this.props;

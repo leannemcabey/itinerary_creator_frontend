@@ -31,6 +31,23 @@ const styles  = theme => ({
 
 
 class Place extends Component {
+
+  postPlacesToAPI = (itineraryPlaces) => {
+    for (let place of itineraryPlaces) {
+      fetch(`http://localhost:3000/api/v1/itinerary_places`, {
+        method: 'POST',
+        body: JSON.stringify({
+          place_id: place.id,
+          itinerary_id: this.state.itinerary.id
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
