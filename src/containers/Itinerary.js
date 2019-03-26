@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import Place from '../components/Place'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import PlaceIcon from '@material-ui/icons/Place'
-import Grid from '@material-ui/core/Grid';
-
-// Styling
+import { withStyles } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Grid from '@material-ui/core/Grid'
+import PropTypes from 'prop-types'
 
 const styles = theme => ({
   container: {
@@ -64,12 +58,10 @@ const styles = theme => ({
 });
 
 
-
-
 class Itinerary extends Component {
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
     return (
       <main className={classes.main}>
       <CssBaseline />
@@ -86,6 +78,6 @@ class Itinerary extends Component {
 
 Itinerary.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(Itinerary);
+export default withStyles(styles)(Itinerary)

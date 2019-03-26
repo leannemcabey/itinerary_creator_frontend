@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
-import { Redirect } from "react-router-dom"
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-
-
-// Styling
+import { withStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import PropTypes from 'prop-types'
 
 const styles = theme => ({
   container: {
@@ -63,26 +59,6 @@ const styles = theme => ({
   },
 });
 
-const budget = [
-  {
-    value: '1',
-    label: 'Tinder Date ($)',
-  },
-  {
-    value: '2',
-    label: 'Second Date ($$)',
-  },
-  {
-    value: '3',
-    label: "Fam ($$$)",
-  },
-  {
-    value: '4',
-    label: 'Ballin ($$$$)',
-  },
-];
-
-
 class Quiz extends Component {
 
   constructor(props) {
@@ -98,12 +74,181 @@ class Quiz extends Component {
     }
   }
 
+  budgets = () => {
+    return [
+      {
+        value: '1',
+        label: 'Tinder Date ($)',
+      },
+      {
+        value: '2',
+        label: 'Second Date ($$)',
+      },
+      {
+        value: '3',
+        label: "Fam ($$$)",
+      },
+      {
+        value: '4',
+        label: 'Ballin ($$$$)',
+      },
+    ]
+  }
+
+  renderQuestionaire = (classes) => {
+    return (
+      <main className={classes.main}>
+        <CssBaseline />
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <AssignmentIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            New Itinerary
+          </Typography>
+          <form onSubmit = {this.handleSubmit} className={classes.container} noValidate autoComplete="off">
+            <TextField
+              required
+              id="outlined-name"
+              label="Title"
+              name='title'
+              placeholder="Title"
+              className={classes.textField}
+              value={this.state.title}
+              onChange={this.handleChange}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Notes"
+              placeholder="Notes"
+              multiline
+              rowsMax="4"
+              name= 'notes'
+              value={this.state.notes}
+              onChange={this.handleChange}
+              className={classes.textField}
+              margin="normal"
+              helperText="Write any notes you have"
+              fullWidth
+            />
+            <TextField
+              required
+              id="outlined-name"
+              name='date'
+              className={classes.textField}
+              value={this.state.date}
+              onChange={this.handleChange}
+              margin="normal"
+              type='date'
+              fullWidth
+            />
+            <TextField
+              required
+              id="outlined-name"
+              label="City"
+              name='city'
+              placeholder="City"
+              className={classes.textField}
+              value={this.state.city}
+              onChange={this.handleChange}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              required
+              id="outlined-name"
+              label="State"
+              name='state'
+              placeholder="State"
+              className={classes.textField}
+              value={this.state.state}
+              onChange={this.handleChange}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              id="outlined-select-budget"
+              select
+              label="Budget"
+              className={classes.textField}
+              value={this.state.budget}
+              name='budget'
+              onChange={this.handleChange}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                }
+              }}
+              helperText="What's your budget?"
+              margin="normal"
+              fullWidth>
+                {this.budgets().map(option => (
+                  <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                ))}
+            </TextField>
+            <br />
+            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+              Submit
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    )
+  }
+
   handleChange = event => {
-    const key =  event.target.name
-    if(key === 'budget'){
-      this.setState({ [key]: parseInt(event.target.value)})
-    }else{
-      this.setState({ [key]: event.target.value})
+    if (event.target.name === 'budget') {
+      this.setState({
+        [event.target.name]: parseInt(event.target.value)
+      })
+    }
+    else {
+      this.setState(
+        {[event.target.name]: event.target.value
+      })
+    }
+  }
+
+  getAvailablePlaces = () => {
+    const city = this.state.city
+    const state = this.state.state
+    const budget = this.state.budget
+
+    const availablePlaces = this.props.allPlaces.filter(place => place.city === city && place.state === state && place.price_level <= budget)
+
+    return availablePlaces
+  }
+
+  generateItinerary = () => {
+    let availablePlaces = this.getAvailablePlaces()
+    const itineraryPlaces = []
+
+    for (let i = 0; i < 5; i++) {
+      let index = Math.floor(Math.random() * availablePlaces.length)
+      itineraryPlaces.push(availablePlaces[index])
+      availablePlaces = availablePlaces.filter(place => place !== availablePlaces[index])
+    }
+
+    this.props.setItineraryPlaces(itineraryPlaces)
+
+    return itineraryPlaces
+  }
+
+  postPlacesToAPI = (itineraryPlaces) => {
+    for (let place of itineraryPlaces) {
+      fetch(`http://localhost:3000/api/v1/itinerary_places`, {
+        method: 'POST',
+        body: JSON.stringify({
+          place_id: place.id,
+          itinerary_id: this.props.itineraryId
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
     }
   }
 
@@ -126,135 +271,23 @@ class Quiz extends Component {
       })
     })
     .then(r => r.json())
-    .then(r => this.props.updateCurrentItinerary(r))
+    .then(r => this.props.setItinerary(r))
+    .then(() => this.postPlacesToAPI(this.generateItinerary()))
   }
 
   render() {
-    const { classes } = this.props;
-
+    const {classes} = this.props
     return (
-
       <div>
-      {this.props.getIteneraryId() ? <Redirect to="/itinerary" /> :
-      <div>
-      <main className={classes.main}>
-        <CssBaseline />
-          <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-              <AssignmentIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-             New Itinerary
-          </Typography>
-            <form onSubmit = {this.handleSubmit} className={classes.container} noValidate autoComplete="off">
-              <TextField
-                required
-                id="outlined-name"
-                label="Title"
-                name='title'
-                placeholder="Title"
-                className={classes.textField}
-                value={this.state.title}
-                onChange={this.handleChange}
-                margin="normal"
-                fullWidth
-              />
-              <TextField
-              id="outlined-multiline-flexible"
-              label="Notes"
-              placeholder="Notes"
-              multiline
-              rowsMax="4"
-              name= 'notes'
-              value={this.state.notes}
-              onChange={this.handleChange}
-              className={classes.textField}
-              margin="normal"
-              helperText="Write any notes you have"
-              fullWidth
-            />
-            <TextField
-            required
-            id="outlined-name"
-            name='date'
-            className={classes.textField}
-            value={this.state.date}
-            onChange={this.handleChange}
-            margin="normal"
-            type='date'
-            fullWidth
-          />
-
-          <TextField
-            required
-            id="outlined-name"
-            label="City"
-            name='city'
-            placeholder="City"
-            className={classes.textField}
-            value={this.state.city}
-            onChange={this.handleChange}
-            margin="normal"
-            fullWidth
-          />
-
-          <TextField
-            required
-            id="outlined-name"
-            label="State"
-            name='state'
-            placeholder="State"
-            className={classes.textField}
-            value={this.state.state}
-            onChange={this.handleChange}
-            margin="normal"
-            fullWidth
-          />
-          <TextField
-          id="outlined-select-budget"
-          select
-          label="Budget"
-          className={classes.textField}
-          value={this.state.budget}
-          name='budget'
-          onChange={this.handleChange}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="What's your budget"
-          margin="normal"
-          fullWidth
-          >
-            {budget.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-            <br />
-            <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-
-          </form>
-          </Paper>
-        </main>
-      </div>}
+        {this.renderQuestionaire(classes)}
       </div>
     )
   }
+
 }
 
 Quiz.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(Quiz);
+export default withStyles(styles)(Quiz)

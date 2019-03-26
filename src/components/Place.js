@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Chip from '@material-ui/core/Chip'
 
-// styling
+
 const styles  = theme => ({
   card: {
     minWidth: 275,
@@ -31,6 +31,7 @@ const styles  = theme => ({
 
 
 class Place extends Component {
+
   render() {
     const { classes } = this.props;
     return (
@@ -54,14 +55,12 @@ class Place extends Component {
         <Button size="small" color="secondary"  target="_blank" href={this.props.place.website} className={classes.button}>Learn More</Button>
       </CardActions>
     </Card>
-
-
     )
   }
 }
 
 Place.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(Place);
+export default withStyles(styles)(Place)
