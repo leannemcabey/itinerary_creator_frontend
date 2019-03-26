@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Chip from '@material-ui/core/Chip'
 
-// styling
+
 const styles  = theme => ({
   card: {
     minWidth: 275,
@@ -31,22 +31,6 @@ const styles  = theme => ({
 
 
 class Place extends Component {
-
-  postPlacesToAPI = (itineraryPlaces) => {
-    for (let place of itineraryPlaces) {
-      fetch(`http://localhost:3000/api/v1/itinerary_places`, {
-        method: 'POST',
-        body: JSON.stringify({
-          place_id: place.id,
-          itinerary_id: this.state.itinerary.id
-        }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-    }
-  }
 
   render() {
     const { classes } = this.props;
@@ -71,8 +55,6 @@ class Place extends Component {
         <Button size="small" color="secondary"  target="_blank" href={this.props.place.website} className={classes.button}>Learn More</Button>
       </CardActions>
     </Card>
-
-
     )
   }
 }
@@ -81,4 +63,4 @@ Place.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Place);
+export default withStyles(styles)(Place)

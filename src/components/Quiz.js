@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import { Redirect } from "react-router-dom"
-// import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import { withStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import AssignmentIcon from '@material-ui/icons/Assignment'
 
 const styles = theme => ({
   container: {
@@ -212,7 +210,47 @@ class Quiz extends Component {
     }
   }
 
-  // This should happen on itinerary file. But how to trigger?
+  getAvailablePlaces = () => {
+    const city = this.state.city
+    const state = this.state.state
+    const budget = this.state.budget
+
+    const availablePlaces = this.props.allPlaces.filter(place => place.city === city && place.state === state && place.price_level <= budget)
+
+    return availablePlaces
+  }
+
+  generateItinerary = () => {
+    let availablePlaces = this.getAvailablePlaces()
+    const itineraryPlaces = []
+
+    for (let i = 0; i < 5; i++) {
+      let index = Math.floor(Math.random() * availablePlaces.length)
+      itineraryPlaces.push(availablePlaces[index])
+      availablePlaces = availablePlaces.filter(place => place !== availablePlaces[index])
+    }
+
+    this.props.setItineraryPlaces(itineraryPlaces)
+
+    return itineraryPlaces
+  }
+
+  postPlacesToAPI = (itineraryPlaces) => {
+    for (let place of itineraryPlaces) {
+      fetch(`http://localhost:3000/api/v1/itinerary_places`, {
+        method: 'POST',
+        body: JSON.stringify({
+          place_id: place.id,
+          itinerary_id: this.props.itineraryId
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+  }
+
   handleSubmit = event => {
     event.preventDefault()
     fetch('http://localhost:3000/api/v1/itineraries', {
@@ -232,22 +270,23 @@ class Quiz extends Component {
       })
     })
     .then(r => r.json())
-    .then(r => this.props.setItinerary(r), () => this.postPlacesToAPI(this.generateItinerary()))
+    .then(r => this.props.setItinerary(r))
+    .then(() => this.postPlacesToAPI(this.generateItinerary()))
   }
 
   render() {
     const {classes} = this.props
     return (
       <div>
-        {this.props.iteneraryId ? <Redirect to="/itinerary" /> : this.renderQuestionaire(classes)}
+        {this.renderQuestionaire(classes)}
       </div>
     )
   }
 
 }
 
-// Quiz.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// }
+Quiz.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
 
-export default withStyles(styles)(Quiz);
+export default withStyles(styles)(Quiz)

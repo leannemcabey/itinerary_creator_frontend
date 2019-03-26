@@ -29,7 +29,8 @@ class App extends Component {
 
   state = {
     user: null,
-    places: [],
+    allPlaces: [],
+    itineraryPlaces: null,
     itinerary: {
       id: null,
       title: null,
@@ -41,12 +42,18 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    fetch('http://localhost:3000/api/v1/places')
+      .then(r => r.json())
+      .then(allPlaces => this.setState({allPlaces}))
+  }
+
   setActiveUser = (user) => {
     this.setState({user})
   }
 
-  setPlaces = (places) => {
-    this.setState({places})
+  setItineraryPlaces = (itineraryPlaces) => {
+    this.setState({itineraryPlaces})
   }
 
   setItinerary = (itinerary) => {
@@ -54,19 +61,19 @@ class App extends Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const {classes} = this.props
 
     return (
       <Router>
         <div>
-          {this.state.user ? <Redirect to="/create" /> : <Redirect to="/signin" />}
+          {this.state.itineraryPlaces ? <Redirect to='/itinerary' /> : this.state.user ? <Redirect to="/create" /> : <Redirect to="/signin" />}
           <div className={classes.root}>
             <center><img src={require('./assets/images/Delish_Dream_Dish.png')} alt='logo'/></center>
           </div>
           <div>
             <Route path='/signin' render={() => <User setActiveUser={this.setActiveUser} />}/>
-            <Route path='/create' render={() => <Quiz user={this.state.user} setItinerary={this.setItinerary} iteneraryId={this.state.itinerary.id}/>}/>
-            <Route path='/itinerary' render={() => <Itinerary setPlaces={this.setPlaces} places={this.generateItinerary()} />}/>
+            <Route path='/create' render={() => <Quiz user={this.state.user} setItinerary={this.setItinerary} setItineraryPlaces={this.setItineraryPlaces} itineraryId={this.state.itinerary.id} allPlaces={this.state.allPlaces} itineraryPlaces={this.state.itineraryPlaces}/>}/>
+            <Route path='/itinerary' render={() => <Itinerary places={this.state.itineraryPlaces}/>}/>
           </div>
         </div>
       </Router>

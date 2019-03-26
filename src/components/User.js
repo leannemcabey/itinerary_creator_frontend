@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -96,7 +95,7 @@ class User extends Component {
           <form className={classes.form} onSubmit={this.findOrCreateUser}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="name">Name</InputLabel>
-              <Input id="name" name="name" autoComplete="name" autoFocus />
+            <Input onChange={this.handleChange} id="name" name="name" autoComplete="name" autoFocus />
             </FormControl>
             <FormControl margin="normal" required fullWidth></FormControl>
             <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
@@ -110,10 +109,8 @@ class User extends Component {
 
 }
 
-// I don't what this is / nor do I think it's being used anywhere. Need to check full functionality.
-
-// User.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// }
+User.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
 
 export default withStyles(styles)(User)
