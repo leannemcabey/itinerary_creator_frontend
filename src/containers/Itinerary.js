@@ -3,6 +3,7 @@ import Place from '../components/Place'
 import { withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
+import PropTypes from 'prop-types'
 
 const styles = theme => ({
   container: {
